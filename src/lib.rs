@@ -1,5 +1,3 @@
-use std::intrinsics::prefetch_read_instruction;
-
 mod front_of_house {
     pub mod hosting {
         pub fn add_to_waitlist() { println!("Added to waitlist") }
@@ -19,6 +17,23 @@ mod front_of_house {
 fn serve_order() {}
 
 mod back_of_house {
+    use std::fmt;
+
+    pub enum Appetizer {
+        Soup,
+        Salad,
+    }
+
+    // Formatter to print Appetizer enum (copied from stackoverflow and modified)
+    impl fmt::Display for Appetizer {
+        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            match *self {
+                Appetizer::Soup => write!(f, "Soup"),
+                Appetizer::Salad => write!(f, "Salad"),
+            }
+        }
+    }
+
     pub struct Breakfast {
         pub toast: String,
         seasonal_fruit: String,
@@ -53,9 +68,14 @@ pub fn eat_at_restaurant() {
     let mut meal = back_of_house::Breakfast::summer("Rye");
     // Change our mind about what bread we'd like
     meal.toast = String::from("Wheat");
-    println!("I'd like {} toast please", meal.toast)
+    println!("I'd like {} toast please", meal.toast);
 
     // Next line won't compile if we uncomment it; we're not allowed
     // to see or modify the seasonal fruit that comes with the meal
     // meal.seasonal_fruit = String::from("blueberries");
+
+    let order1 = back_of_house::Appetizer::Soup;
+    let order2 = back_of_house::Appetizer::Salad;
+
+    println!("So second order was {1} and first {0}, right?", order1, order2);
 }
