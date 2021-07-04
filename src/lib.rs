@@ -57,9 +57,17 @@ mod back_of_house {
     fn cook_order() {}
 }
 
+// Abs path and pub use (re-export)
+pub use crate::front_of_house::hosting;
+// Relative path
+// use self::front_of_house::hosting;
+
 pub fn eat_at_restaurant() {
     // Absolute path
     crate::front_of_house::hosting::add_to_waitlist();
+
+    // With use
+    hosting::add_to_waitlist();
 
     // Relative path
     front_of_house::hosting::add_to_waitlist();
