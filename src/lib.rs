@@ -1,6 +1,6 @@
 mod front_of_house {
     pub mod hosting {
-        pub fn add_to_waitlist() {println!("Added to waitlist")}
+        pub fn add_to_waitlist() { println!("Added to waitlist") }
 
         fn seat_at_table() {}
     }
@@ -8,10 +8,22 @@ mod front_of_house {
     mod serving {
         fn take_order() {}
 
-        fn server_order() {}
+        fn serve_order() {}
 
         fn take_payment() {}
     }
+}
+
+fn serve_order() {}
+
+mod back_of_house {
+    fn fix_incorrect_order() {
+        cook_order();
+        // call server_order
+        super::serve_order();
+    }
+
+    fn cook_order() {}
 }
 
 pub fn eat_at_restaurant() {
